@@ -20,4 +20,5 @@ install:
   - if [ "$PROVIDER" = virtualbox ]; then sudo apt-get install -y -q virtualbox; fi
 
 script:
+  - if [ "$PROVIDER" = virtualbox ]; then sudo VBoxManage --version; fi
   - sudo vagrant up --provider=$PROVIDER
