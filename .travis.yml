@@ -1,0 +1,9 @@
+language: generic
+dist: bionic
+
+install:
+  # - sudo apt-get install -y -q qemu vagrant virtualbox
+  - sudo apt-get install -y -q qemu vagrant
+
+script:
+  - sudo vagrant up 
