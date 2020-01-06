@@ -3,7 +3,13 @@ dist: bionic
 
 install:
   # - sudo apt-get install -y -q qemu vagrant virtualbox
-  - sudo apt-get install -y -q qemu vagrant
+  # - sudo apt-get install -y -q qemu vagrant
+  # https://unix.stackexchange.com/questions/159094/how-to-install-a-deb-file-by-dpkg-i-or-by-apt
+  - curl -sfLO https://releases.hashicorp.com/vagrant/2.2.6/vagrant_2.2.6_x86_64.deb
+  - sudo apt-get install -y -q ./vagrant_2.2.6_x86_64.deb
+  # https://github.com/vagrant-libvirt/vagrant-libvirt#installation
+  - sudo apt-get install -y -q apt-get build-dep ruby-libvirt qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+  - sudo vagrant plugin install vagrant-libvirt
 
 script:
-  - sudo vagrant up 
+  - sudo vagrant up --provider=libvirt
