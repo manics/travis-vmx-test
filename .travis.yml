@@ -1,6 +1,12 @@
 language: generic
 dist: bionic
 
+
+env:
+  matrix:
+    - PROVIDER=libvirt
+    - PROVIDER=virtualbox
+
 install:
   # - sudo apt-get install -y -q qemu vagrant virtualbox
   # - sudo apt-get install -y -q qemu vagrant
@@ -10,7 +16,8 @@ install:
   # https://github.com/vagrant-libvirt/vagrant-libvirt#installation
   # - sudo apt-get build-dep vagrant ruby-libvirt
   - sudo apt-get install -y -q ruby-libvirt qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
-  - sudo vagrant plugin install vagrant-libvirt
+  - if [ "$PROVIDER" = libvirt ]; then sudo vagrant plugin install vagrant-libvirt; fi
+  - if [ "$PROVIDER" = virtualbox ]; then sudo apt-get install -y -q virtualbox; fi
 
 script:
-  - sudo vagrant up --provider=libvirt
+  - sudo vagrant up --provider=$PROVIDER
