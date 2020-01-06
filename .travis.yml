@@ -8,7 +8,8 @@ install:
   - curl -sfLO https://releases.hashicorp.com/vagrant/2.2.6/vagrant_2.2.6_x86_64.deb
   - sudo apt-get install -y -q ./vagrant_2.2.6_x86_64.deb
   # https://github.com/vagrant-libvirt/vagrant-libvirt#installation
-  - sudo apt-get install -y -q apt-get build-dep ruby-libvirt qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
+  # - sudo apt-get build-dep vagrant ruby-libvirt
+  - sudo apt-get install -y -q ruby-libvirt qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
   - sudo vagrant plugin install vagrant-libvirt
 
 script:
