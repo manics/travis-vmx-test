@@ -15,8 +15,8 @@ install:
   - |
     if [ "$PROVIDER" = libvirt ]; then
       sudo apt-get install -y -q ruby-libvirt qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
-      sudo usermod -aG libvirt $(whoami)
-      vagrant plugin install vagrant-libvirt
+      sudo vagrant plugin install vagrant-libvirt
+      # sudo usermod -aG libvirt $(whoami)
     fi
   # https://github.com/rootless-containers/usernetes/pull/112/files
   # vagrant 2.2.6 doesn't support virtualbox 6.1
@@ -31,4 +31,9 @@ install:
     fi
 
 script:
-  - vagrant up --provider=$PROVIDER
+  - |
+    if [ "$PROVIDER" = libvirt ]; then
+      sudo vagrant up --provider=$PROVIDER
+    else
+      vagrant up --provider=$PROVIDER
+    fi
