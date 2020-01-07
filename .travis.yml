@@ -15,19 +15,20 @@ install:
   - |
     if [ "$PROVIDER" = libvirt ]; then
       sudo apt-get install -y -q ruby-libvirt qemu libvirt-bin ebtables dnsmasq-base libxslt-dev libxml2-dev libvirt-dev zlib1g-dev ruby-dev
-      sudo vagrant plugin install vagrant-libvirt
       sudo usermod -aG libvirt $(whoami)
+      vagrant plugin install vagrant-libvirt
     fi
   # https://github.com/rootless-containers/usernetes/pull/112/files
+  # vagrant 2.2.6 doesn't support virtualbox 6.1
   - |
     if [ "$PROVIDER" = virtualbox ]; then
       curl -sfL https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo apt-key add -
       sudo sh -c "echo deb https://download.virtualbox.org/virtualbox/debian bionic contrib >> /etc/apt/sources.list"
       sudo apt-get update
-      sudo apt-get install -y -q build-essential gcc make linux-headers-$(uname -r) virtualbox-6.1
+      sudo apt-get install -y -q build-essential gcc make linux-headers-$(uname -r) virtualbox-6.0
       sudo usermod -aG vboxusers $(whoami)
+      VBoxManage --version
     fi
 
 script:
-  - if [ "$PROVIDER" = virtualbox ]; then VBoxManage --version; fi
   - vagrant up --provider=$PROVIDER
